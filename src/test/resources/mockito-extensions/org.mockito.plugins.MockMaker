@@ -1,0 +1,4 @@
+# Byte Buddy's inline mock maker self-attaches as a Java agent, which fails on JDK 26
+# (agent attach isn't yet supported). No test here mocks final classes/methods, so the
+# subclass mock maker (no agent required) is used instead.
+mock-maker-subclass
