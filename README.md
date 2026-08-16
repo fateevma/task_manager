@@ -25,8 +25,9 @@ Learning project built to try out Spring Boot + JTE + HTMX together. Still a wor
 - Add a new task
 - Delete a task
 - Page updates without a full reload (thanks to HTMX)
+- Tasks persist in a file-based H2 database (`./data/taskdb`) — they survive app restarts
 
-Data is stored in memory (a list inside `TaskRepository`); it resets to the sample tasks every time the app restarts.
+Sample tasks are seeded once, only if the database is empty, so restarting won't wipe your own tasks. Browse the raw data at [http://localhost:8080/h2-console](http://localhost:8080/h2-console) (JDBC URL `jdbc:h2:file:./data/taskdb`, user `sa`, empty password).
 
 ### Requirements
 
@@ -76,7 +77,7 @@ src/test/java/...           — tests
 
 ### Roadmap
 
-- [ ] Persist tasks in a database (currently in-memory only)
+- [x] Persist tasks in a database
 - [ ] Mark a task as done (status)
 - [ ] Edit an existing task
 - [ ] Validate input on the "add task" form
@@ -101,8 +102,9 @@ src/test/java/...           — tests
 - Добавление новой задачи
 - Удаление задачи
 - Обновление списка на странице без полной перезагрузки (за счёт HTMX)
+- Задачи сохраняются в файловой базе H2 (`./data/taskdb`) — переживают перезапуск приложения
 
-Хранение данных — в памяти (список в `TaskRepository`), при перезапуске приложения список сбрасывается к тестовым задачам.
+Тестовые задачи создаются один раз, только если база пуста, поэтому перезапуск не затирает ваши собственные задачи. Посмотреть содержимое базы можно на [http://localhost:8080/h2-console](http://localhost:8080/h2-console) (JDBC URL `jdbc:h2:file:./data/taskdb`, пользователь `sa`, пароль пустой).
 
 ### Требования
 
@@ -152,7 +154,7 @@ src/test/java/...           — тесты
 
 ### Что планируется доработать
 
-- [ ] Сохранение задач в базу данных (сейчас всё хранится в памяти)
+- [x] Сохранение задач в базу данных
 - [ ] Отметка задачи как выполненной (статус)
 - [ ] Редактирование существующей задачи
 - [ ] Валидация ввода на форме добавления задачи

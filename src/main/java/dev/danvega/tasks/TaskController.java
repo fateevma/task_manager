@@ -25,7 +25,7 @@ public class TaskController {
     @PostMapping("/add-task")
     public String addTask(@RequestParam String description, Model model) {
         Task newTask = new Task(description);
-        repository.create(newTask);
+        repository.save(newTask);
         model.addAttribute("task", newTask);
         return "task-row";
     }
@@ -33,7 +33,9 @@ public class TaskController {
     @DeleteMapping("/delete-task/{id}")
     @ResponseBody
     public void deleteTask(@PathVariable String id) {
-        boolean removed = repository.remove(id);
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        }
         log.info("Task with id: {} was deleted.", id);
     }
 }

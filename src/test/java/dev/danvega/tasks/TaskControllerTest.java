@@ -3,23 +3,30 @@ package dev.danvega.tasks;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.List;
+
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Import(TaskRepository.class)
 @WebMvcTest(TaskController.class)
 public class TaskControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    private TaskRepository repository;
+
     @Test
     public void testIndexPage() throws Exception {
+        when(repository.findAll()).thenReturn(List.of(new Task("Sample task")));
+
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
